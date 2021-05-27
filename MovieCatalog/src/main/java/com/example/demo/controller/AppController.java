@@ -32,11 +32,12 @@ public class AppController {
     @GetMapping("/{userId}")
     public List<CatalogItem> catalogList(@PathVariable String userId) {
     	
-    	UserRating ratings= restTemplate.getForObject("http://localhost:8083/ratings/"+userId, UserRating.class);
+    	UserRating ratings= restTemplate.getForObject("http://rating-data-service/ratings/"+userId, UserRating.class);
+    	//    	UserRating ratings= restTemplate.getForObject("http://localhost:8083/ratings/"+userId, UserRating.class);
     	
     	return ratings.getUserRating().stream().map(rating->{
     		//MovieInfo movieInfo= restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), MovieInfo.class);    		
-    		MovieInfo[] movieInfo= restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), MovieInfo[].class);
+    		MovieInfo[] movieInfo= restTemplate.getForObject("http://movie-info-service/movies/"+rating.getMovieId(), MovieInfo[].class);
     		
     	/*	MovieInfo[] movieInfo= webClientBuilder.build()
     				.get()
